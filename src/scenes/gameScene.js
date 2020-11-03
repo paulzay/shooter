@@ -4,6 +4,8 @@ export default class GameScene extends Phaser.Scene {
     constructor(){
         super('Game');
         this.ship;
+        this.inputKeys;
+        this.laserGroup;
     }
 
     preload(){
@@ -33,6 +35,7 @@ export default class GameScene extends Phaser.Scene {
 		
 		this.LaserGroup = new LaserGroup(this);
         this.addShip();
+        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.addEvents();
 
 	}
@@ -42,7 +45,7 @@ export default class GameScene extends Phaser.Scene {
         const centerX = this.cameras.main.width / 2;
 		const bottom = this.cameras.main.height - 90;
 		this.player = this.physics.add.sprite(centerX, bottom, 'ship');
-	
+		this.player.scale = 0.15;
 		this.cursors = this.input.keyboard.createCursorKeys();
 
 		this.player.setCollideWorldBounds(true);
@@ -64,5 +67,76 @@ export default class GameScene extends Phaser.Scene {
     	if(this.cursors.down.isDown){
     		this.player.setVelocityY(moveAmt);
     	}
+    	if (Phaser.Input.Keyboard.JustDown(this.spaceKey)){
+    		this.shootLaser;
+    	}
+
+    	// this.inputKeys.forEach(key =>{
+    	// 	if(Phaser.Input.Keyboard.JustDown(key)){
+    	// 		this.shootLaser;
+    	// 	}
+    	// })
+    }
+
+    addEvents(){
+        this.input.on('pointerdown', pointer => {
+            this.shootLaser();
+        });
+
+        this.inputKeys = [
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER),
+        ];
+    }
+    shootLaser() {
+        this.laserGroup.fireLaser(this.ship.x, this.ship.y - 20);
+    }
+}
+
+class LaserGroup extends Phaser.Physics.Arcade.Group{
+    constructor(scene) {
+        // Call the super constructor, passing in a world and a scene
+        super(scene.physics.world, scene);
+ 
+        // Initialize the group
+        this.createMultiple({
+            classType: Laser, // This is the class we create just below
+            frameQuantity: 30, // Create 30 instances in the pool
+            active: false,
+            visible: false,
+            key: 'laser'
+        })
+    }
+
+    fireLaser(x, y) {
+        // Get the first available sprite in the group
+        const laser = this.getFirstDead(false);
+        if (laser) {
+            laser.fire(x, y);
+        }
+    }
+ 
+
+}
+
+class Laser extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y) {
+        super(scene, x, y, 'laser');
+    }
+    fire(x, y) {
+        this.body.reset(x, y);
+        this.setActive(true);
+        this.setVisible(true);
+ 
+        this.setVelocityY(-900);
+    }
+    
+    preUpdate(time, delta) {
+        super.preUpdate(time, delta);
+ 
+        if (this.y <= 0) {
+            this.setActive(false);
+            this.setVisible(false);
+        }
     }
 }
