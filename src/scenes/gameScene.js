@@ -6,6 +6,10 @@ export default class GameScene extends Phaser.Scene {
 		this.ship;
 		this.laserGroup;
 		this.inputKeys;
+		this.score = 0;
+		this.scoreString = '';
+		this.scoreText;
+		this.lives;
     }
 
     preload(){
@@ -38,7 +42,24 @@ export default class GameScene extends Phaser.Scene {
 		this.addShip();
 		this.addEvents();
         // this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        
+
+	    //  The score
+	    this.scoreString = 'Score : ';
+	    this.scoreText = this.add.text(10, 10, this.scoreString + this.score, { font: '34px', fill: '#fff' });
+
+	    //  Lives
+	    this.lives = this.add.group();
+	    this.add.text(this.cameras.main.width - 100, 10, 'Lives : ', { font: '34px', fill: '#fff' });
+
+	    for (var i = 0; i < 3; i++) 
+	    {
+	        this.ships = this.lives.create(this.cameras.main.width - 100 + (30 * i), 60, 'ship');
+	        this.ships.setAnchor =0.5, 0.5;
+	        this.ships.angle = 90;
+	        this.ships.scale = 0.1;
+	        this.ships.alpha = 0.4;
+	    }
+
 
 	}
 
