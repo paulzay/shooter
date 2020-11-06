@@ -3,14 +3,14 @@ import 'phaser'
 export default class GameScene extends Phaser.Scene {
     constructor(){
         super('Game');
-        this.ship;
-        this.inputKeys;
-        this.laserGroup;
+		this.ship;
+		this.laserGroup;
+		this.inputKeys;
     }
 
     preload(){
         this.load.image('space', 'assets/ui/space.png');
-		this.load.image('laser', 'assets/ui/projectile1.png');
+		this.load.image('laser', 'assets/ui/projectile2.png');
 		this.load.image('ship', 'assets/ui/starship.png');
 		this.load.spritesheet('foe1', 'assets/ui/starshipdark.png', {
         frameWidth: 16,
@@ -33,10 +33,12 @@ export default class GameScene extends Phaser.Scene {
     create(){
 		this.add.image(400,300, 'space');
 		
-		this.LaserGroup = new LaserGroup(this);
-        this.addShip();
-        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        this.addEvents();
+		this.laserGroup = new LaserGroup(this);
+
+		this.addShip();
+		this.addEvents();
+        // this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        
 
 	}
 
@@ -44,99 +46,96 @@ export default class GameScene extends Phaser.Scene {
     addShip(){
         const centerX = this.cameras.main.width / 2;
 		const bottom = this.cameras.main.height - 90;
-		this.player = this.physics.add.sprite(centerX, bottom, 'ship');
-		this.player.scale = 0.15;
+		this.ship = this.physics.add.sprite(centerX, bottom, 'ship');
+		this.ship.scale = 0.15;
 		this.cursors = this.input.keyboard.createCursorKeys();
 
-		this.player.setCollideWorldBounds(true);
+		this.ship.setCollideWorldBounds(true);
     }
 
-    update(){
-    	// enable player to move 4 directions
+	update() {
+		// Loop over all keys
+		this.inputKeys.forEach(key => {
+			// Check if the key was just pressed, and if so -> fire the bullet
+			if(Phaser.Input.Keyboard.JustDown(key)) {
+				this.fireBullet();
+			}
+		});
     	const moveAmt = 200;
-    	this.player.setDrag(2000);
+    	this.ship.setDrag(2000);
     	if(this.cursors.right.isDown){
-    		this.player.setVelocityX(moveAmt);
+    		this.ship.setVelocityX(moveAmt);
     	}
     	if(this.cursors.left.isDown){
-    		this.player.setVelocityX(-moveAmt);
+    		this.ship.setVelocityX(-moveAmt);
     	}
     	if(this.cursors.up.isDown){
-    		this.player.setVelocityY(-moveAmt);
+    		this.ship.setVelocityY(-moveAmt);
     	}
     	if(this.cursors.down.isDown){
-    		this.player.setVelocityY(moveAmt);
+    		this.ship.setVelocityY(moveAmt);
     	}
-    	if (Phaser.Input.Keyboard.JustDown(this.spaceKey)){
-    		this.shootLaser;
-    	}
-
-    	// this.inputKeys.forEach(key =>{
-    	// 	if(Phaser.Input.Keyboard.JustDown(key)){
-    	// 		this.shootLaser;
-    	// 	}
-    	// })
-    }
-
+	}
     addEvents(){
-        this.input.on('pointerdown', pointer => {
-            this.shootLaser();
-        });
 
-        this.inputKeys = [
-            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
-            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER),
-        ];
+		// Firing bullets should also work on enter / spacebar press
+		this.inputKeys = [
+			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
+			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
+		];
     }
-    shootLaser() {
-        this.laserGroup.fireLaser(this.ship.x, this.ship.y - 20);
-    }
+
+	fireBullet() {
+		this.laserGroup.fireBullet(this.ship.x, this.ship.y - 20);
+	}
 }
 
-class LaserGroup extends Phaser.Physics.Arcade.Group{
-    constructor(scene) {
-        // Call the super constructor, passing in a world and a scene
-        super(scene.physics.world, scene);
- 
-        // Initialize the group
-        this.createMultiple({
-            classType: Laser, // This is the class we create just below
-            frameQuantity: 30, // Create 30 instances in the pool
-            active: false,
-            visible: false,
-            key: 'laser'
-        })
-    }
+class Laser extends Phaser.Physics.Arcade.Sprite
+{
+	constructor(scene, x, y) {
+		super(scene, x, y, 'laser');
+	}
 
-    fireLaser(x, y) {
-        // Get the first available sprite in the group
-        const laser = this.getFirstDead(false);
-        if (laser) {
-            laser.fire(x, y);
-        }
-    }
+	fire(x, y) {
+		this.body.reset(x, y);
+
+		this.setActive(true);
+		this.setVisible(true);
+
+		this.setVelocityY(-900);
+	}
+
+	preUpdate(time, delta) {
+		super.preUpdate(time, delta);
  
+		if (this.y <= 0) {
+			this.setActive(false);
+			this.setVisible(false);
+		}
+	}
 
 }
 
-class Laser extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y) {
-        super(scene, x, y, 'laser');
-    }
-    fire(x, y) {
-        this.body.reset(x, y);
-        this.setActive(true);
-        this.setVisible(true);
- 
-        this.setVelocityY(-900);
-    }
-    
-    preUpdate(time, delta) {
-        super.preUpdate(time, delta);
- 
-        if (this.y <= 0) {
-            this.setActive(false);
-            this.setVisible(false);
-        }
-    }
+class LaserGroup extends Phaser.Physics.Arcade.Group
+{
+	constructor(scene) {
+		super(scene.physics.world, scene);
+
+		this.createMultiple({
+			frameQuantity: 30,
+			key: 'laser',
+			active: false,
+			visible: false,
+			classType: Laser
+		});
+	}
+
+	fireBullet(x, y) {
+		const laser = this.getFirstDead(false);
+
+		if(laser) {
+			laser.fire(x, y);
+			laser.setScale(0.3)
+		}
+	}
 }
