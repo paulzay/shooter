@@ -1,9 +1,9 @@
 import 'phaser';
 
-export class Laser extends Phaser.Physics.Arcade.Sprite
+class Laser extends Phaser.Physics.Arcade.Sprite
 {
 	constructor(scene, x, y) {
-		super(scene, x, y, 'laser');
+		super(scene, x, y, 'bullet');
 	}
 
 	fire(x, y) {
@@ -26,14 +26,14 @@ export class Laser extends Phaser.Physics.Arcade.Sprite
 
 }
 
-export class LaserGroup extends Phaser.Physics.Arcade.Group
+export default class LaserGroup extends Phaser.Physics.Arcade.Group
 {
 	constructor(scene) {
 		super(scene.physics.world, scene);
 
 		this.createMultiple({
-			frameQuantity: 30,
-			key: 'laser',
+			frameQuantity: 100,
+			key: 'bullet',
 			active: false,
 			visible: false,
 			classType: Laser
@@ -45,30 +45,7 @@ export class LaserGroup extends Phaser.Physics.Arcade.Group
 
 		if(laser) {
 			laser.fire(x, y);
-			laser.setScale(0.3)
+			laser.setScale(0.5)
 		}
 	}
 }
-
-// import Entity from './entities';
-
-// export class EnemyLaser extends Entity {
-//   constructor(scene, x, y) {
-//     super(scene, x, y, "bullets");
-//     this.body.velocity.y = 200;
-//   }
-// }
-
-// export class Bullet extends Phaser.Sprite {
-
-//     constructor({ game, x, y, asset, health, tint = 0xff0000 }) {
-//         super(game, x, y, asset);
-
-//         this.anchor.setTo(0.5);
-//         this.scale.setTo(0.8);
-//         this.health = health;
-//         this.tint = tint;
-//         this.checkWorldBounds = true;
-//         this.outOfBoundsKill = true;
-//     }
-// }
