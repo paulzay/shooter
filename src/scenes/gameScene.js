@@ -28,11 +28,25 @@ export default class GameScene extends Phaser.Scene {
 		this.add.image(400,300, 'space');
 		this.player = new Player(this);
 		this.laserGroup = new LaserGroup(this);
-		this.addEvents();
+    this.addEvents();
+    
+    //player movement
+    this.keys = this.input.keyboard.createCursorKeys(); 
+    this.keys.W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    this.keys.A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.keys.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+    this.keys.D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
 	}
 
-	update() {
+	update(elapsedTime, deltaTime){
 
+    this.enemyDelta += deltaTime;
+    this.enemyShooterDelta += deltaTime;
+
+    if (this.player && this.player.active) {
+      this.player.update(elapsedTime, deltaTime);
+    }
 		this.inputKeys.forEach(key => {
 			if(Phaser.Input.Keyboard.JustDown(key)) {
 				this.fireBullet();
