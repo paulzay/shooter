@@ -64,6 +64,7 @@ export default class GameScene extends Phaser.Scene {
 		this.player = new Player(this);
 		this.laserGroup = new LaserGroup(this);
     this.addEvents();
+  
     this.textLives = this.add.text(10, 10, `Lives: ${this.player.lives}`);
     this.textScore = this.add.text(100, 10, `Score: ${this.player.score}`);
     //player movement
@@ -90,7 +91,7 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	update(elapsedTime, deltaTime){
-
+    this.checkStageStatus();
     this.enemyDelta += deltaTime;
     this.enemyShooterDelta += deltaTime;
 
@@ -157,6 +158,16 @@ export default class GameScene extends Phaser.Scene {
     enemy.playAnimation("enemyShooter_fly");
     this.enemies.add(enemy);
   }
+
+  spawnBoss() {
+    this.boss = new EnemyBoss(
+                this,
+                Phaser.Math.Between(0, this.game.config.width),
+                0
+            );
+    this.enemies.add(this.boss);
+  }
+
   createAnimation() {
     // Add explosion animation
     this.anims.create({
@@ -253,6 +264,11 @@ export default class GameScene extends Phaser.Scene {
   
   gameOver(){
     this.scene.start('GameOver');
+  }
+  checkStageStatus() {
+    if (this.player.score > 1500 && !(this.boss instanceof EnemyBoss)) {
+      this.spawnBoss();
+    } 
   }
 }
 
@@ -359,7 +375,7 @@ class EnemyBoss extends Enemy {
         this.scene.physics.moveTo(bulletLeft, this.scene.player.x, this.scene.player.y, 100);
         this.bullets.add(bulletLeft);
         // Right hand side bullets
-        let bulletRight = this.scene.physics.add.image(this.x + 20 * (i + 1), this.y + 32, "bullet");
+        let bulletRight = this.scene.physics.add.image(this.x + 20 * (i + 1), this.y + 32, "bullets");
         this.scene.physics.moveTo(bulletRight, this.scene.player.x, this.scene.player.y, 100);
         this.bullets.add(bulletRight);
       });
