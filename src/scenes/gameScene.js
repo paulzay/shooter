@@ -78,6 +78,15 @@ export default class GameScene extends Phaser.Scene {
     this.enemyDelta = 0;
     this.enemyShooterDelta = 0;
     this.createAnimation();
+
+    this.physics.add.overlap(this.enemies, this.laserGroup, (enemy, bullet) => {
+      this.handleEnemyAndPlayerBulletCollision(enemy, bullet);
+    });
+
+    this.physics.add.overlap(this.player, this.enemyBullets, (player, bullet) => {
+      this.handlePlayerAndEnemieBulletsCollision(player, bullet);
+    });
+    
 	}
 
 	update(elapsedTime, deltaTime){
@@ -228,6 +237,23 @@ export default class GameScene extends Phaser.Scene {
       repeat: -1
     });
   }
+
+  handlePlayerAndEnemieBulletsCollision(player, bullet) {
+    bullet.destroy();
+    player.handleCollision();
+  }
+
+  handleEnemyAndPlayerBulletCollision(enemy, bullet) {
+    bullet.destroy();
+    enemy.handleCollision();
+    if (!enemy.active) {
+      this.player.addToScore(enemy.reward);
+    }
+  }
+  
+  gameOver(){
+    this.scene.start('GameOver');
+  }
 }
 
 
@@ -303,11 +329,6 @@ class EnemyBoss extends Enemy {
     }
   }
 
-  /**
-   * Custom collision handling logic for the boss enemy only.
-   * @returns
-   * @memberof EnemyBoss
-   */
   handleCollision() {
     // If boss stills in invincible mode, do not deal damage.
     if (this.isInvincible) {
@@ -325,11 +346,6 @@ class EnemyBoss extends Enemy {
       explosion.anims.play("explode");
     }
   }
-
-  /**
-   * Fires all bullets for this instance of EnemyBoss. Shooting pattern can be one of two, depending on damage dealt.
-   * @memberof EnemyBoss
-   */
   fireBullet() {
     // First shooting pattern
     if (this.health >= GlobalSettings.enemyBossHealth / 2) {
