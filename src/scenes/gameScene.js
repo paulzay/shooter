@@ -29,7 +29,8 @@ export default class GameScene extends Phaser.Scene {
 		this.player = new Player(this);
 		this.laserGroup = new LaserGroup(this);
     this.addEvents();
-    
+    this.textLives = this.add.text(10, 10, `Lives: ${this.player.lives}`);
+    this.textScore = this.add.text(100, 10, `Score: ${this.player.score}`);
     //player movement
     this.keys = this.input.keyboard.createCursorKeys(); 
     this.keys.W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -64,6 +65,6 @@ export default class GameScene extends Phaser.Scene {
     }
 
 	fireBullet() {
-		this.laserGroup.fireBullet(this.ship.x, this.ship.y - 20);
+		this.laserGroup.fireBullet(this.player.x, this.player.y - 20);
 	}
 }
