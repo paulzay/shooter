@@ -16,6 +16,8 @@
     "webpack-dev-server": "^2.0.0"
   },
   "dependencies": {
-    "phaser": "^3.0.0"
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "phaser": "^3.0.0",
+    "regenerator-runtime": "^0.13.7"
   }
 }

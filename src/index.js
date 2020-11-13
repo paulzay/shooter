@@ -1,4 +1,5 @@
 import 'phaser';
+import "regenerator-runtime/runtime";
 import config from './config/config';
 import GameScene from './scenes/gameScene';
 import BootScene from './scenes/bootScene';
