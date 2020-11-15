@@ -89,7 +89,7 @@ export default class GameScene extends Phaser.Scene {
     });
     
 	}
-
+ 
 	update(elapsedTime, deltaTime){
     this.checkStageStatus();
     this.enemyDelta += deltaTime;
@@ -124,11 +124,9 @@ export default class GameScene extends Phaser.Scene {
 	}
     
   addEvents(){
-
-		// Firing bullets should also work on enter / spacebar press
 		this.inputKeys = [
 			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
-			this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
+			// this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
 		];
   }
 
