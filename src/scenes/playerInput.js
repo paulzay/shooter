@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import  LocalStorage from '../objects/localstorage';
-import { getScores, postScores }from './apicall';
+import { postScores }from './apicall';
 
 
 export default class PlayerInput extends Phaser.Scene {
@@ -24,9 +24,9 @@ export default class PlayerInput extends Phaser.Scene {
     this.input.keyboard.removeCapture(Phaser.Input.Keyboard.KeyCodes.D);
 
     this.returnKey.on("down", event => {
-        let inputName = document.getElementById('nameinput').value;
+        const inputName = document.getElementById('nameinput').value;
         if(inputName!= "" && score > 0) {
-          postScores(inputName);
+          postScores(inputName)
           this.scene.start('LeaderBoard');
         }
     });
