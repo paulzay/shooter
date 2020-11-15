@@ -1,6 +1,6 @@
 import "phaser";
 import { GlobalSettings } from "./GlobalSettings";
-
+import LocalStorage from '../objects/localstorage';
 
 const initialX = GlobalSettings.width / 2;
 const initialY = GlobalSettings.height - 50;
@@ -44,7 +44,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.sound.add("player-explosion").play();
     this.scene.updateGUI();
     if (this.lives < 1) {
-     this.scene.gameOver();
+      this.scene.gameOver();
       this.destroy();
       return;
     }
@@ -61,6 +61,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     if (this.active) {
       this.score += points;
       this.scene.updateGUI();
+      LocalStorage.saveLocalStorage(this.score);
     }
   }
 
