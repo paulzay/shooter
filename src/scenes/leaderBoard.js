@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
-import Button from '../objects/Button';
 import { getScores } from './apicall';
+import Button from '../objects/Button';
+import config from '../config/config';
 
 export default class LeaderBoard extends Phaser.Scene {
   constructor() {
@@ -18,6 +19,7 @@ export default class LeaderBoard extends Phaser.Scene {
     }).catch(() => {
 
     });
-  }
+    this.menuButton = new Button(this,config.width - 100, 10, 'blueButton1', 'blueButton2', 'Menu', 'Title');
 
+  }
 }
