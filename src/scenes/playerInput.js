@@ -26,7 +26,8 @@ export default class PlayerInput extends Phaser.Scene {
     this.returnKey.on("down", event => {
         const inputName = document.getElementById('nameinput').value;
         if(inputName!= "" && score > 0) {
-          postScores(inputName)
+          this.submit = postScores(inputName, score);
+          LocalStorage.clearLocalStorage();
           this.scene.start('LeaderBoard');
         }
     });
