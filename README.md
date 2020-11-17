@@ -47,6 +47,7 @@ npm run test
 
 ## Screenshots
 ![title](https://user-images.githubusercontent.com/29974825/99401584-66b46c00-28f9-11eb-8ef7-ac340e4e0e96.png)
+![play](https://user-images.githubusercontent.com/29974825/99402200-25708c00-28fa-11eb-8e75-2b884b787360.png)
 ![gameover](https://user-images.githubusercontent.com/29974825/99401520-53a19c00-28f9-11eb-83ea-a07cdff5855c.png)
 ![savescore](https://user-images.githubusercontent.com/29974825/99401535-5a301380-28f9-11eb-9441-7f55129072e7.png)
 ![score](https://user-images.githubusercontent.com/29974825/99401539-5bf9d700-28f9-11eb-9d13-1bd92492e345.png)
