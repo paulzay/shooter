@@ -45,6 +45,11 @@ npm run test
 + MOVE RIGHT: Press [D] key
 + SHOOT LASER: Press [SPACEBAR] key
 
+## About the game
+The player fights against a non-lethal enemy, a shooting enemy and a boss enemy. In order to fight the boss,
+the player has to acquire a set amount of points by shooting the first two enemies. Once the score is reached, the player now faces the boss. 
+The game has no win scenario, the goal is to acquire as much points as you can before running out of lives.
+
 ## Screenshots
 ![title](https://user-images.githubusercontent.com/29974825/99401584-66b46c00-28f9-11eb-8ef7-ac340e4e0e96.png)
 ![play](https://user-images.githubusercontent.com/29974825/99402200-25708c00-28fa-11eb-8e75-2b884b787360.png)
