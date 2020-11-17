@@ -9,9 +9,8 @@ export const GlobalSettings = {
   // Enemy Boss
   enemyBossBulletDelay: 5000,
   enemyBossDropRate: 0,
-  enemyBossHealth: 500,
   enemyBossReward: 5000,
   // Game level settings
-  height: window.innerHeight * 0.8, // px
-  width: window.innerWidth * 0.8 // px
+  height: window.innerHeight * 0.8,
+  width: window.innerWidth * 0.8
 };

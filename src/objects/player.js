@@ -14,7 +14,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.lives = 5;
     this.score = 0;
-
+    this.bullets = this.scene.playerBullets;
+    this.shotDeltaTime = 0;
     this.createAnimations();
     this.anims.play("fly");
   }
@@ -81,5 +82,33 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     if (this.scene.keys.down.isDown || this.scene.keys.S.isDown) {
       this.body.velocity.y += 300;
     }
+    if (this.scene.input.activePointer.isDown || this.scene.keys.space.isDown) {
+      if (this.shotDeltaTime > GlobalSettings.playerShotDelay) {
+        this.shotDeltaTime = 0;
+        this.fireBullet();
+      }
+    }
+    this.checkBulletsPosition();
+
   }
+  fireBullet() {
+    if (!this.active) {
+      return;
+    }
+    const bullet = this.scene.physics.add.image(this.x, this.y, "bullet");
+    this.scene.sound.add("player-fire").play();
+    bullet.setVelocity(0, -500);
+    bullet.setScale(0.3)
+    this.scene.playerBullets.add(bullet);
+  }
+
+
+  checkBulletsPosition() {
+    this.scene.playerBullets.getChildren().forEach(bullet => {
+      if (bullet.y < 0) {
+        bullet.destroy();
+      }
+    });
+  }
+
 }
