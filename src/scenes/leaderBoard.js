@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { getScores } from './apicall';
+import { getScores } from '../objects/apicall';
 import Button from '../objects/Button';
 import config from '../config/config';
 

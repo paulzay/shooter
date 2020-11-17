@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import  LocalStorage from '../objects/localstorage';
-import { postScores }from './apicall';
+import { postScores }from '../objects/apicall';
 
 
 export default class PlayerInput extends Phaser.Scene {
