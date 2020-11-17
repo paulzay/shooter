@@ -1,4 +1,4 @@
-import { postScores, getScores } from '../src/scenes/apicall';
+import { postScores, getScores } from '../src/objects/apicall';
 
 describe('The scores and usernames should be written and read from the API', () => {
   test('Should save the score to the API', () => {
