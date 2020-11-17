@@ -34,7 +34,7 @@ describe('The scores and usernames should be written and read from the API', () 
         ]),
       );
     }).catch(() => {
-        'Something didnt work'
+      'Something didnt work';
     });
   });
 });

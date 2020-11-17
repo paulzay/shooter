@@ -27,18 +27,17 @@ function sorting(obj) {
 }
 
 async function getScores() {
-  try {
-    const response = await fetch(url, {
-      mode: 'cors',
-    });
-    if (response.ok) {
-      const jsonResponse = await response.json();
-      return jsonResponse.result;
-    }
-    throw new Error('Request Failed!');
-  } catch (error) {
-    return error;
-  }
+  const settings = {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+  const response = await fetch(url, settings);
+  const answer = await response.json();
+
+  return sorting(answer.result);
 }
 
 export { getScores, postScores };

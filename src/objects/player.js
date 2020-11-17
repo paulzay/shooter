@@ -1,13 +1,13 @@
-import "phaser";
-import { GlobalSettings } from "./GlobalSettings";
-import LocalStorage from '../objects/localstorage';
+import Phaser from 'phaser';
+import { GlobalSettings } from './GlobalSettings';
+import LocalStorage from './localstorage';
 
 const initialX = GlobalSettings.width / 2;
 const initialY = GlobalSettings.height - 50;
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene) {
-    super(scene, initialX, initialY, "player1", 0);
+    super(scene, initialX, initialY, 'player1', 0);
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.setCollideWorldBounds(true);
@@ -17,32 +17,32 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.bullets = this.scene.playerBullets;
     this.shotDeltaTime = 0;
     this.createAnimations();
-    this.anims.play("fly");
+    this.anims.play('fly');
   }
 
   createAnimations() {
     this.scene.anims.create({
-      key: "fly",
-      frames: [{ key: "player1", frame: 0 }, { key: "player1", frame: 1 }, { key: "player1", frame: 2 }],
+      key: 'fly',
+      frames: [{ key: 'player1', frame: 0 }, { key: 'player1', frame: 1 }, { key: 'player1', frame: 2 }],
       frameRate: 30,
-      repeat: -1
+      repeat: -1,
     });
     this.scene.anims.create({
-      key: "ghost",
+      key: 'ghost',
       frames: [
-        { key: "player1", frame: 3 },
-        { key: "player1", frame: 0 },
-        { key: "player1", frame: 3 },
-        { key: "player1", frame: 1 }
+        { key: 'player1', frame: 3 },
+        { key: 'player1', frame: 0 },
+        { key: 'player1', frame: 3 },
+        { key: 'player1', frame: 1 },
       ],
       frameRate: 20,
-      repeat: 5
+      repeat: 5,
     });
   }
 
   handleCollision() {
     this.lives -= 1;
-    this.scene.sound.add("player-explosion").play();
+    this.scene.sound.add('player-explosion').play();
     this.scene.updateGUI();
     if (this.lives < 1) {
       this.scene.gameOver();
@@ -52,10 +52,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.x = initialX;
     this.y = initialY;
     this.on(`${Phaser.Animations.Events.SPRITE_ANIMATION_KEY_COMPLETE}ghost`, () => {
-      this.anims.play("fly");
+      this.anims.play('fly');
     });
 
-    this.anims.play("ghost");
+    this.anims.play('ghost');
   }
 
   addToScore(points = 0) {
@@ -89,19 +89,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       }
     }
     this.checkBulletsPosition();
-
   }
+
   fireBullet() {
     if (!this.active) {
       return;
     }
-    const bullet = this.scene.physics.add.image(this.x, this.y, "bullet");
-    this.scene.sound.add("player-fire").play();
+    const bullet = this.scene.physics.add.image(this.x, this.y, 'bullet');
+    this.scene.sound.add('player-fire').play();
     bullet.setVelocity(0, -500);
-    bullet.setScale(0.3)
+    bullet.setScale(0.3);
     this.scene.playerBullets.add(bullet);
   }
-
 
   checkBulletsPosition() {
     this.scene.playerBullets.getChildren().forEach(bullet => {
@@ -110,5 +109,4 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       }
     });
   }
-
 }

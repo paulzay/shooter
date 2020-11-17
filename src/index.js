@@ -1,5 +1,5 @@
-import 'phaser';
-import "regenerator-runtime/runtime";
+import Phaser from 'phaser';
+import 'regenerator-runtime/runtime';
 import config from './config/config';
 import GameScene from './scenes/gameScene';
 import BootScene from './scenes/bootScene';
@@ -13,7 +13,7 @@ import LeaderBoard from './scenes/leaderBoard';
 import Model from './Model';
 
 class Game extends Phaser.Game {
-  constructor () {
+  constructor() {
     super(config);
     const model = new Model();
     this.globals = { model, bgMusic: null };
@@ -21,13 +21,12 @@ class Game extends Phaser.Game {
     this.scene.add('Preloader', PreloaderScene);
     this.scene.add('Title', TitleScene);
     this.scene.add('Options', OptionsScene);
-    this.scene.add('GameOver', GameOver)
+    this.scene.add('GameOver', GameOver);
     this.scene.add('Credits', CreditsScene);
-    this.scene.add('PlayerInput', PlayerInput)
-    this.scene.add('LeaderBoard', LeaderBoard)
+    this.scene.add('PlayerInput', PlayerInput);
+    this.scene.add('LeaderBoard', LeaderBoard);
     this.scene.add('Game', GameScene);
     this.scene.start('Boot');
-
   }
 }
 

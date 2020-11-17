@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export const GlobalSettings = {
   enemySpawnDelay: 2000, // ms
   // Enemy Shooter
@@ -12,5 +13,5 @@ export const GlobalSettings = {
   enemyBossReward: 5000,
   // Game level settings
   height: window.innerHeight * 0.8,
-  width: window.innerWidth * 0.8
+  width: window.innerWidth * 0.8,
 };
