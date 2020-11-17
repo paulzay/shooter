@@ -1,12 +1,10 @@
-import  LocalStorage from '../objects/localstorage';
-const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/M6spAnEcYsmE9Cz83Fi0/scores/';
+const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/WUMWsoxkHHSWQ8HS7oWT/scores/';
 async function postScores(userName, scoreValue) {
   const submit = {
     user: userName,
     score: scoreValue,
   };
   const post = JSON.stringify(submit);
-const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/M6spAnEcYsmE9Cz83Fi0/scores/';
   const settings = {
     method: 'POST',
     headers: {
@@ -29,7 +27,6 @@ function sorting(obj) {
 }
 
 async function getScores() {
-const url = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/M6spAnEcYsmE9Cz83Fi0/scores/';
   try {
     const response = await fetch(url, {
       mode: 'cors',
