@@ -30,7 +30,7 @@ npm install
 ```
 >Start the server
 ```
-npm run dev
+npm start
 ```
 > Open up your browser and navigate to http://localhost:8080/dist/ and start the game
 
@@ -56,6 +56,19 @@ The game has no win scenario, the goal is to acquire as much points as you can b
 ![gameover](https://user-images.githubusercontent.com/29974825/99401520-53a19c00-28f9-11eb-83ea-a07cdff5855c.png)
 ![savescore](https://user-images.githubusercontent.com/29974825/99401535-5a301380-28f9-11eb-9441-7f55129072e7.png)
 ![score](https://user-images.githubusercontent.com/29974825/99401539-5bf9d700-28f9-11eb-9d13-1bd92492e345.png)
+
+### Game Design & Development
+- In order to get started with the game, I had to start by going through a tutorial on how to use Phaser [here](http://phaser.io/tutorials/making-your-first-phaser-3-game). This alongside the phaser documentation and examples provided the basic knowledge.
+#### Design
+- Next up, I came up with a concept theme to work with and the storyline for the flow of the game. This includes the scene background and sprites for the character and the sound effects to be used. The storyline controlled the spawing of the enemies at different set times. Different capabilities for the player and enemies were proposed for implementation.
+
+#### Assets
+- With the game design in mind, I went to opengameart to find the right assets that would bring my game to life. 
+
+#### Development
+- Now that everything that I needed was in my asset folder, I proceeded to plan how the game would come together with the different characters. First I set up the player character, made him move and able to fire. Next came the enemy characters and their traits as well. A few extra features were left out for future development but the core requirements were met.
+Having implemented their core features, I went on to add more scenes for navigating the game and then wrote some tests to ensure things were working as they should.
+- The last thing was separating the code into modules for readability and easier maintenance.
 
 ## Author
 
