@@ -17,7 +17,7 @@ export default class LeaderBoard extends Phaser.Scene {
     }).catch(() => {
 
     });
-    this.menuButton = new Button(this,config.width - 100, 10, 'blueButton1', 'blueButton2', 'Menu', 'Title');
+    this.menuButton = new Button(this,config.width/2, config.height/2 + 250, 'blueButton1', 'blueButton2', 'Menu', 'Title');
 
   }
 }

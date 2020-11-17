@@ -9,26 +9,19 @@ export default class GameOver extends Phaser.Scene {
 
   create(currentScene) {
 
-    const mainMessage = this.add.text(window.innerWidth * 0.8 / 2, window.innerHeight * 0.8 / 2 - 30, "GAME OVER", {
-      align: "center",
-      fontSize: 32
+    const mainMessage = this.add.text(this.game.config.width * 0.5, 128, "GAME OVER", {
+      fontFamily: 'monospace',
+      fontSize: 48,
+      fontStyle: 'bold',
+      color: '#ffffff',
+      align: 'center'
     });
     mainMessage.setOrigin(0.5);
-    this.menuButton = new Button(this, window.innerWidth * 0.8 / 2, window.innerHeight * 0.8 / 2, 'blueButton1', 'blueButton2', 'PlayerInput', 'PlayerInput');
-    // const finalScore = this.add.text(
-      // window.innerWidth * 0.8 / 2,
-      // window.innerHeight * 0.8 / 2,
-    //   `Your final score was ${this.gameScene.player.score}.`,
-    //   {
-    //     align: "center",
-    //     fontSize: 16
-    //   }
-    // );
-    // finalScore.setOrigin(0.5);
-
+    this.menuButton = new Button(this,  this.game.config.width * 0.5,
+      200, 'blueButton1', 'blueButton2', 'Save', 'PlayerInput');
     const restartMessage = this.add.text(
-      window.innerWidth * 0.8 / 2,
-      window.innerHeight * 0.8 / 2 + 20,
+          this.game.config.width * 0.5,
+      this.game.config.height * 0.5,
       `Reload the page to play again.`,
       {
         align: "center",
