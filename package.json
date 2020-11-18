@@ -6,16 +6,56 @@
   "author": "paulzay <paulotieno2@gmail.com>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "jest",
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "setupFiles": [
+      "jest-canvas-mock"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "<rootDir>/test/mocks/styleMock.js",
+      "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/mocks/fileMock.js"
+    }
+  },
   "devDependencies": {
-    "babel-core": "6",
-    "babel-loader": "^7.0.0",
-    "babel-preset-env": "^1.0.0",
-    "copy-webpack-plugin": "^4.5.1",
-    "raw-loader": "^0.5.1",
-    "webpack": "^3.0.0",
-    "webpack-dev-server": "^2.0.0"
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^25.5.1",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "copy-webpack-plugin": "^6.3.1",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "fetch-mock": "^9.4.0",
+    "fetch-mock-jest": "^1.2.7",
+    "html-webpack-plugin": "^4.2.1",
+    "jest": "^25.5.2",
+    "jest-canvas-mock": "^2.3.0",
+    "jest-fetch-mock": "^3.0.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "phaser": "^3.0.0"
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/runtime": "^7.9.6",
+    "cross-fetch": "^3.0.6",
+    "phaser": "^3.0.0",
+    "regenerator-runtime": "^0.13.7"
   }
 }
