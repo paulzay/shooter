@@ -74,7 +74,6 @@ Having implemented their core features, I went on to add more scenes for navigat
 
 👤 **Paul Ogolla**
 
-- Github: [@paulzay](https://github.com/paulzay)
 - Twitter: [@paulzay](https://twitter.com/_paulzay_)
 - Linkedin: [@paulzay](https://linkedin.com/in/paulogolla)
 
